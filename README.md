@@ -27,8 +27,6 @@ Replaces a static HTML site that ran for 5 years with a modern, mobile-first sta
 
 </div>
 
-> _Replace [`preview.svg`](./preview.svg) with a real homepage screenshot (`preview.png`) once you have one — recruiters skim, and a real shot is the highest-leverage upgrade you can make._
-
 ---
 
 ## 🎯 What this project is
