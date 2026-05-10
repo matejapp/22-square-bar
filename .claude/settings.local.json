@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\HP\\\\Documents\\\\Claude\\\\Projects\\\\LegacyCodeTransition\" -Recurse -Force)",
+      "Bash(Select-Object FullName, PSIsContainer)",
+      "Bash(ConvertTo-Json)",
+      "Bash(Write-Output)",
+      "Bash(grep -E \"\\\\.\\(js|jsx|ts|tsx|json|py|java|cpp|c|rb|go|rs|md|env|sql\\)$\")",
+      "WebSearch",
+      "Bash(powershell -NoProfile -Command \"Get-PSDrive -PSProvider FileSystem | Select-Object Name, Used, Free | Format-Table -AutoSize\")",
+      "PowerShell(& 'C:\\\\Users\\\\HP\\\\AppData\\\\Local\\\\MacIcons\\\\Scripts\\\\apply-mac-icons.ps1')"
+    ]
+  }
+}
