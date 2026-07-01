@@ -22,7 +22,7 @@ export async function getPublicMenu(req, res) {
     }
 
     const [rows] = await pool.execute(
-      'SELECT id, section, category, category_order, name, description, price, sort_order FROM menu_items WHERE available = TRUE ORDER BY section, category_order, category, sort_order, id',
+      'SELECT id, section, category, category_order, name, description, price, sort_order, allergens FROM menu_items WHERE available = TRUE ORDER BY section, category_order, category, sort_order, id',
     )
 
     menuCache = rows
@@ -62,7 +62,8 @@ export async function createMenuItem(req, res) {
     description,
     price,
     available,
-    sort_order
+    sort_order,
+    allergens
   } = req.body
 
   if (!section || !category || !name || price === undefined) {
@@ -73,8 +74,8 @@ export async function createMenuItem(req, res) {
 
   try {
     const [result] = await pool.execute(
-      'INSERT INTO menu_items (section, category, category_order, name, description, price, available, sort_order) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-      [section, category, category_order ?? 0, name, description || null, price, available ?? true, sort_order ?? 0]
+      'INSERT INTO menu_items (section, category, category_order, name, description, price, available, sort_order, allergens) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [section, category, category_order ?? 0, name, description || null, price, available ?? true, sort_order ?? 0, allergens || null]
     )
 
     clearCache()
@@ -103,13 +104,14 @@ export async function updateMenuItem(req, res) {
     description,
     price,
     available,
-    sort_order
+    sort_order,
+    allergens
   } = req.body
 
   try {
     const [result] = await pool.execute(
-      'UPDATE menu_items SET section=?, category=?, category_order=?, name=?, description=?, price=?, available=?, sort_order=? WHERE id=?',
-      [section, category, category_order ?? 0, name, description || null, price, available, sort_order ?? 0, id]
+      'UPDATE menu_items SET section=?, category=?, category_order=?, name=?, description=?, price=?, available=?, sort_order=?, allergens=? WHERE id=?',
+      [section, category, category_order ?? 0, name, description || null, price, available, sort_order ?? 0, allergens || null, id]
     )
 
     if (result.affectedRows === 0) {

@@ -56,7 +56,9 @@ export default function MenuPage() {
       },
       { rootMargin: "-180px 0px -55% 0px", threshold: 0 },
     );
-    Object.values(sectionRefs.current).forEach((el) => el && observer.observe(el));
+    Object.values(sectionRefs.current).forEach(
+      (el) => el && observer.observe(el),
+    );
     return () => observer.disconnect();
   }, [categories]);
 
@@ -163,14 +165,40 @@ export default function MenuPage() {
             </nav>
           )}
 
+          {/* Allergen legend */}
+          <div className="mb-8 rounded-xl border border-navy/10 bg-cream/60 px-5 py-4">
+            <p className="text-[10px] font-semibold tracking-[0.3em] uppercase text-terracotta mb-3">
+              Alergeni
+            </p>
+            <div className="flex flex-wrap gap-x-6 gap-y-2">
+              {[
+                { code: "G", name: "Gluten" },
+                { code: "M", name: "Mleko" },
+                { code: "J", name: "Jaja" },
+                { code: "S", name: "Soja" },
+                { code: "SU", name: "Susam" },
+                { code: "SE", name: "Senf" },
+                { code: "R", name: "Riba" },
+                { code: "K", name: "Kikiriki" },
+              ].map(({ code, name }) => (
+                <div key={code} className="flex items-center gap-2">
+                  <span
+                    className="inline-block text-[11px] font-bold leading-none px-2 py-1 rounded
+                                   bg-terracotta/10 text-terracotta border border-terracotta/20 w-7 text-center"
+                  >
+                    {code}
+                  </span>
+                  <span className="text-sm text-navy/70">{name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* Content grid: sidebar TOC (md+) | items */}
           <div className="grid md:grid-cols-12 gap-8 md:gap-12">
             {/* Desktop TOC */}
             <aside className="hidden md:block md:col-span-3 lg:col-span-3">
-              <nav
-                aria-label="Kategorije menija"
-                className="sticky top-28"
-              >
+              <nav aria-label="Kategorije menija" className="sticky top-28">
                 <p className="text-[10px] font-semibold tracking-[0.3em] uppercase text-terracotta mb-4">
                   Kategorije
                 </p>
@@ -237,6 +265,39 @@ export default function MenuPage() {
                 </div>
               )}
             </div>
+          </div>
+          {/* Allergen disclaimer */}
+          <div className="mt-12 pt-6 border-t border-navy/10">
+            <p className="text-[10px] font-semibold tracking-[0.3em] uppercase text-terracotta mb-2">
+              Napomena
+            </p>
+            <p className="text-xs text-navy/50 leading-relaxed max-w-2xl">
+              {/* TODO: replace with final disclaimer text */}
+              <span className="text-terracotta">Dragi gosti,</span>
+              <p>
+                U cilju vaše sigurnosti i u skladu sa Zakonom o bezbednosti
+                hrane i Pravilnikom o deklarisanju hrane, obavezni smo da vas
+                obavestimo o mogućem prisustvu alergenih sastojaka u jelima koja
+                poslužujemo. Molimo vas da obratite pažnju na oznake alergena
+                koje se nalaze uz svako jelo u našem jelovniku. Informacija za
+                goste: Iako koristimo mlečne proizvode kao što su kačkavalj,
+                kajmak i pavlaka, napominjemo da isti mogu sadržati dodatke
+                biljnog porekla (npr. biljne masti, biljni proteini, skrob ili
+                aditivi), u zavisnosti od proizvođača. Ukoliko imate posebne
+                prehrambene potrebe, slobodno se obratite našem osoblju za više
+                informacija. U skladu sa Zakonom o zaštiti potrošača („Sl.
+                glasnik RS”, br. 88/2021), potrošač ima pravo da izjavi
+                reklamaciju na pruženu uslugu. Reklamaciju možete podneti:
+                Usmeno – neposredno u objektu, kod konobara ili upravnika smene
+                Pisanim putem – upisom u knjigu reklamacija koja se nalazi kod
+                osoblja Elektronski – putem e-mail adrese:{" "}
+                <a href="mailto:contact@22squarebar.com" className="underline">
+                  contact@22squarebar.com
+                </a>
+                . Reklamacija će biti evidentirana, a odgovor ćete dobiti
+                najkasnije u roku od 8 dana od dana prijema reklamacije.
+              </p>
+            </p>
           </div>
         </section>
       </main>

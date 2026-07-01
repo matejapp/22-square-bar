@@ -1,8 +1,10 @@
 import { formatPriceShort } from "../utils/format";
 
-// Editorial-style menu row with dotted leader.
-// Lighter on the chrome — the typography does the work.
 export default function MenuItemCard({ item }) {
+  const allergens = item.allergens
+    ? item.allergens.split(",").map((s) => s.trim()).filter(Boolean)
+    : [];
+
   return (
     <article className="group py-3 border-b border-navy/10 last:border-0">
       <div className="flex items-baseline">
@@ -14,6 +16,19 @@ export default function MenuItemCard({ item }) {
           {formatPriceShort(item.price)}
         </span>
       </div>
+      {allergens.length > 0 && (
+        <div className="flex gap-1 mt-1" aria-label={`Alergeni: ${allergens.join(", ")}`}>
+          {allergens.map((code) => (
+            <span
+              key={code}
+              className="inline-block text-[10px] font-bold leading-none px-1.5 py-0.5 rounded
+                         bg-terracotta/10 text-terracotta border border-terracotta/20"
+            >
+              {code}
+            </span>
+          ))}
+        </div>
+      )}
       {item.description && (
         <p className="text-sm text-navy/60 mt-1 leading-snug italic">
           {item.description}

@@ -25,6 +25,7 @@ await conn.execute(`
     price       DECIMAL(10,2) NOT NULL,
     available   BOOLEAN DEFAULT TRUE,
     sort_order  INT DEFAULT 0,
+    allergens   VARCHAR(50) DEFAULT NULL COMMENT 'Comma-separated: G=gluten, M=mleko, J=jaja, S=soja, SU=susam, SE=senf, R=riba, K=kikiriki',
     created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     INDEX idx_public (section, available, category_order, sort_order)
   )

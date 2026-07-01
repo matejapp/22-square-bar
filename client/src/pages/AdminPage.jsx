@@ -7,6 +7,17 @@ import { formatPrice } from "../utils/format";
 
 const SECTIONS = ["jelovnik", "fastfood", "pice"];
 
+const ALLERGEN_OPTIONS = [
+  { code: "G", label: "G — Gluten" },
+  { code: "M", label: "M — Mleko" },
+  { code: "J", label: "J — Jaja" },
+  { code: "S", label: "S — Soja" },
+  { code: "SU", label: "SU — Susam" },
+  { code: "SE", label: "SE — Senf" },
+  { code: "R", label: "R — Riba" },
+  { code: "K", label: "K — Kikiriki" },
+];
+
 const EMPTY_FORM = {
   section: "jelovnik",
   category: "",
@@ -16,6 +27,7 @@ const EMPTY_FORM = {
   price: "",
   available: true,
   sort_order: 0,
+  allergens: [],
 };
 
 export default function AdminPage() {
@@ -44,7 +56,10 @@ export default function AdminPage() {
   }
 
   function startEdit(item) {
-    setForm({ ...item });
+    const allergens = item.allergens
+      ? item.allergens.split(",").map((s) => s.trim()).filter(Boolean)
+      : [];
+    setForm({ ...item, allergens });
     setEditingId(item.id);
     setShowForm(true);
   }
@@ -63,12 +78,16 @@ export default function AdminPage() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    const payload = {
+      ...form,
+      allergens: form.allergens.length > 0 ? form.allergens.join(",") : null,
+    };
     try {
       if (editingId) {
-        await api.put(`/admin/menu/${editingId}`, form);
+        await api.put(`/admin/menu/${editingId}`, payload);
         toast.success("Stavka ažurirana");
       } else {
-        await api.post("/admin/menu", form);
+        await api.post("/admin/menu", payload);
         toast.success("Stavka dodata");
       }
       cancelForm();
@@ -192,6 +211,15 @@ export default function AdminPage() {
                         <p className="font-semibold text-navy truncate">
                           {item.name}
                         </p>
+                        {item.allergens &&
+                          item.allergens.split(",").map((code) => (
+                            <span
+                              key={code}
+                              className="text-[10px] font-bold bg-orange/15 text-orange px-1.5 py-0.5 rounded"
+                            >
+                              {code.trim()}
+                            </span>
+                          ))}
                         {!item.available && (
                           <span className="text-[10px] uppercase tracking-wider font-bold bg-red-100 text-red-700 px-2 py-0.5 rounded-full">
                             Nedostupno
@@ -310,6 +338,31 @@ export default function AdminPage() {
                 }
                 className="border rounded-lg px-3 py-2 tap-target"
               />
+              <div>
+                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+                  Alergeni
+                </p>
+                <div className="flex gap-3 flex-wrap">
+                  {ALLERGEN_OPTIONS.map(({ code, label }) => {
+                    const checked = form.allergens.includes(code);
+                    return (
+                      <label key={code} className="flex items-center gap-1.5 text-sm cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={checked}
+                          onChange={() => {
+                            const next = checked
+                              ? form.allergens.filter((a) => a !== code)
+                              : [...form.allergens, code];
+                            setForm({ ...form, allergens: next });
+                          }}
+                        />
+                        {label}
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
               <label className="flex items-center gap-2 text-sm">
                 <input
                   type="checkbox"
