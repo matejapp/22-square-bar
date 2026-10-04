@@ -74,7 +74,7 @@ export default function Footer() {
           </a>
           <span className="text-white/20 mx-1">·</span>
           <a
-            href="https://www.linkedin.com/in/mateja-pavlovic-85ba35340"
+            href="https://www.linkedin.com/in/matejapavlovic/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-white/50 hover:text-[#ffa500] transition-colors"

@@ -164,6 +164,17 @@ export default function MenuPage() {
               </ul>
             </nav>
           )}
+          <div className="mb-8 rounded-xl border border-navy/10 bg-cream/60 px-5 py-4">
+          <p className="text-[15px] font-semibold tracking-[0.3em] uppercase text-terracotta mb-3">
+              OBAVEŠTENJE!
+            </p>
+            <p className="text-[15px] text-navy/50 leading-relaxed max-w-2xl">
+              <span className="text-terracotta">Dragi gosti,</span>
+              <p>
+                Radno vreme kuhinje radnim danima je od 9 do 21h,<span className="text-terracotta"> subotom od 15 do 21h, dok nedeljom kuhinja ne radi ceo dan.</span> Hvala Vam na razumevanju i želimo Vam prijatan boravak u našem lokalu!
+              </p>  
+            </p>
+          </div>
 
           {/* Allergen legend */}
           <div className="mb-8 rounded-xl border border-navy/10 bg-cream/60 px-5 py-4">
